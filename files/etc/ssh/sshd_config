@@ -1,0 +1,26 @@
+Port                        22
+
+HostKey                     /etc/ssh/ssh_host_rsa_key
+HostKey                     /etc/ssh/ssh_host_ed25519_key
+
+Ciphers                     chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-gcm@openssh.com,aes128-ctr
+KexAlgorithms               curve25519-sha256@libssh.org,curve25519-sha256,diffie-hellman-group14-sha256,diffie-hellman-group16-sha512,diffie-hellman-group18-sha512,diffie-hellman-group-exchange-sha256
+MACs                        hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com
+
+LogLevel                    INFO
+LoginGraceTime              1m
+MaxSessions                 10
+PasswordAuthentication      no
+PermitEmptyPasswords        no
+PermitRootLogin             yes
+PubkeyAuthentication        yes
+AuthorizedKeysFile          .ssh/authorized_keys
+AllowAgentForwarding        no
+AllowTcpForwarding          no
+PermitTunnel                no
+PrintMotd                   no
+PrintLastLog                no
+TCPKeepAlive                yes
+MaxStartups                 10:30:100
+Banner                      none
+Subsystem                   sftp /usr/lib/sftp-server -f AUTHPRIV -l INFO
