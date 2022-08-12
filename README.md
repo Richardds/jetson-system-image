@@ -1,6 +1,16 @@
 # Jetson Nano system image
 This repository provides a collection of scripts and configuration files for building Jetso Nano SD card image from scratch.
 
+##
+How to:
+1. Install dependencies
+2. Run `sudo ./00_sources.sh` to download toolchain, driver package and source files
+3. Run `sudo ./01_bootstrap.sh` to bootstrap root filesystem
+4. Run `sudo ./02_kernel.sh` to configure, build and install kernel
+5. Run one of the following commands to create `.img` file(s)
+   - `sudo ./03_make_img.sh`: Single `.img` file
+   - `sudo ./03_make_img_f2fs.sh`: Single `.img` file with root on F2FS filesystem
+
 ## Dependencies
 
 ## Archlinux
