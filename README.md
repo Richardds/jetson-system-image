@@ -16,7 +16,11 @@ yay -Sy debootstrap qemu-user-static-bin
 
 Flashing
 ```
-yay -Sy gdisk f2fs-tools
+# Simple
+yay -Sy gdisk
+
+# Simple + F2FS
+yay -Sy gdisk f2fs-tools rsync
 ```
 ## Ubuntu
 TODO

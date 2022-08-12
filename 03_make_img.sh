@@ -1,5 +1,9 @@
 #!/bin/bash
 
+#
+# Produce system image
+#
+
 PWD="$(pwd)"
 WORK_DIR="${PWD}/build"
 L4T_DIR="${WORK_DIR}/l4t"
@@ -42,7 +46,7 @@ chmod +r "${JETSON_IMAGE_PATH}"
 # Create GPT table
 sgdisk -og "${JETSON_IMAGE_PATH}"
 
-# Create partitions (except APP)
+# Create partitions
 "${L4T_TOOLS_DIR}/nvptparser.py" "${L4T_SIGNED_IMAGE_DIR}/flash.xml" sdcard | while IFS= read -r PROPERTIES; do
 	eval "${PROPERTIES}"
 	sgdisk -n "${part_num}:0:+$(( ${part_size} / 512 ))" \
