@@ -22,8 +22,10 @@ fi
 
 # Configure kernel
 make -C "${KERNEL_SOURCE_DIR}" ARCH=arm64 O="${KERNEL_OUT}" -j2 menuconfig
+# - Global setup / Support for paging of anonymous memory (swap): Disable
 # - Kernel features / Maximum number of CPUs: 4
-# - File systems / Btrfs: Disable
+# - File systems / ext3: Disable
+# -              / Btrfs: Disable
 # -              / F2FS: Enable
 # -              / Quota: Disable
 # -              / FUSE: Disable
