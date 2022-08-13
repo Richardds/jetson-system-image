@@ -16,6 +16,8 @@ L4T_TOOLS_DIR="${L4T_DIR}/tools"
 JETSON_IMAGE_FILENAME=jetson.img
 JETSON_IMAGE_PATH="${WORK_DIR}/${JETSON_IMAGE_FILENAME}"
 
+BOOT_PARTITION_SIZE=64 # Space available for kernel and DTB files
+
 #
 # Create FS images
 #
@@ -35,9 +37,8 @@ popd
 
 JETSON_IMAGE_SIZE=$("${L4T_TOOLS_DIR}/nvptparser.py" "${L4T_SIGNED_IMAGE_DIR}/flash.xml" sdcard | awk -F'[=;]' '{sum += (int($6 / (2048 * 512)) + 1)} END {printf "%d\n", sum + 2}')
 
-# Allocate SD card image filled with NULL bytes
+# Allocate SD card image file
 dd if=/dev/zero of="${JETSON_IMAGE_PATH}" bs=1048576 count="${JETSON_IMAGE_SIZE}"
-chmod +r "${JETSON_IMAGE_PATH}"
 
 #
 # Create partitions
@@ -55,13 +56,13 @@ sgdisk -og "${JETSON_IMAGE_PATH}"
 		   "${JETSON_IMAGE_PATH}"
 done
 
-# Get APP partition properties
+# Get BOOT (APP) partition properties
 eval $("${L4T_TOOLS_DIR}/nvptparser.py" "${L4T_SIGNED_IMAGE_DIR}/flash.xml" sdcard | grep 'part_name=APP')
 
 # Define BOOT (APP) partition size
-BOOT_PART_SIZE=$(( 64 * 1024 * 1024 )) # 64 MB
+BOOT_PART_SIZE=$(( ${BOOT_PARTITION_SIZE} * 1048576 ))
 
-# Create APP partition
+# Create BOOT (APP) partition
 sgdisk -n "1:0:+$(( ${BOOT_PART_SIZE} / 512 ))" \
 	   -c "1:APP" \
 	   -t "1:8300" \
@@ -97,7 +98,7 @@ mkdir -p "${MOUNT_DIR}"/{app,root,tmp}
 mount "${L4T_BOOTLOADER_DIR}/system.img.raw" "${MOUNT_DIR}/tmp"
 
 # Flash BOOT (APP) partition
-mkfs.ext4 -f "${JETSON_IMAGE_LOOP_DEV}p1"
+mkfs.ext4 -F "${JETSON_IMAGE_LOOP_DEV}p1"
 mount "${JETSON_IMAGE_LOOP_DEV}p1" "${MOUNT_DIR}/app"
 rsync -aAHx --info=progress2 --delete "${MOUNT_DIR}/tmp/boot" "${MOUNT_DIR}/app"
 

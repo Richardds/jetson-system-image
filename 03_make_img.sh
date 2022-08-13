@@ -35,9 +35,8 @@ popd
 
 JETSON_IMAGE_SIZE=$("${L4T_TOOLS_DIR}/nvptparser.py" "${L4T_SIGNED_IMAGE_DIR}/flash.xml" sdcard | awk -F'[=;]' '{sum += (int($6 / (2048 * 512)) + 1)} END {printf "%d\n", sum + 2}')
 
-# Allocate SD card image filled with NULL bytes
+# Allocate SD card image file
 dd if=/dev/zero of="${JETSON_IMAGE_PATH}" bs=1048576 count="${JETSON_IMAGE_SIZE}"
-chmod +r "${JETSON_IMAGE_PATH}"
 
 #
 # Create partitions
