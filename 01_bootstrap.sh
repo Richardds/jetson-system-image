@@ -86,7 +86,7 @@ echo "/usr/lib/tegra-egl" > "${ROOTFS_DIR}/etc/ld.so.conf.d/nvidia-tegra-egl.con
 chroot "${ROOTFS_DIR}" qemu-aarch64-static /usr/bin/apt install --no-install-recommends -y netplan.io
 
 # Configure netplan
-install -o 0 -g 0 --mode=0644 "${FILES_DIR}/etc/netplan/config.yaml" "${ROOTFS_DIR}/etc/netplan"
+install -o 0 -g 0 --mode=0644 {"${FILES_DIR}","${ROOTFS_DIR}"}/etc/netplan/config.yaml
 
 #
 # SSH
@@ -94,7 +94,7 @@ install -o 0 -g 0 --mode=0644 "${FILES_DIR}/etc/netplan/config.yaml" "${ROOTFS_D
 
 # Install and configure SSH server
 chroot "${ROOTFS_DIR}" qemu-aarch64-static /usr/bin/apt install --no-install-recommends -y openssh-server
-install -o 0 -g 0 --mode=0644 "${FILES_DIR}/etc/ssh/sshd_config" "${ROOTFS_DIR}/etc/ssh"
+install -o 0 -g 0 --mode=0644 {"${FILES_DIR}","${ROOTFS_DIR}"}/etc/ssh/sshd_config
 
 # Regenerate host keys
 rm "${ROOTFS_DIR}/etc/ssh/ssh_host_"*
@@ -103,7 +103,7 @@ chroot "${ROOTFS_DIR}" qemu-aarch64-static /usr/bin/ssh-keygen -t ed25519 -f /et
 
 # Remove small moduli
 awk '$5 >= 3071' "${ROOTFS_DIR}/etc/ssh/moduli" > "${ROOTFS_DIR}/etc/ssh/moduli.safe"
-mv "${ROOTFS_DIR}/etc/ssh/moduli.safe" "${ROOTFS_DIR}/etc/ssh/moduli"
+mv "${ROOTFS_DIR}"/etc/ssh/moduli{.safe,}
 
 # Generate key pair
 if [ ! -f "${WORK_DIR}/id_ed25519.pub" ]; then
