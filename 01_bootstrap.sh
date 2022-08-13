@@ -114,9 +114,15 @@ cp "${WORK_DIR}/id_ed25519.pub" "${ROOTFS_DIR}/root/.ssh/authorized_keys"
 chmod 0600 "${ROOTFS_DIR}/root/.ssh/authorized_keys"
 
 #
+# Install and configure htop
+#
+chroot "${ROOTFS_DIR}" qemu-aarch64-static /usr/bin/apt install --no-install-recommends -y htop
+install -o 0 -g 0 --mode=0644 {"${FILES_DIR}","${ROOTFS_DIR}"}/root/.config/htop/htoprc
+
+#
 # Install optional packages
 #
-chroot "${ROOTFS_DIR}" qemu-aarch64-static /usr/bin/apt install --no-install-recommends -y fdisk f2fs-tools net-tools htop nano
+chroot "${ROOTFS_DIR}" qemu-aarch64-static /usr/bin/apt install --no-install-recommends -y fdisk f2fs-tools net-tools nano
 
 #
 # System config
