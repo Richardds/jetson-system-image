@@ -4,6 +4,8 @@
 # Produce system image
 #
 
+set -e
+
 PWD="$(pwd)"
 WORK_DIR="${PWD}/build"
 L4T_DIR="${WORK_DIR}/l4t"

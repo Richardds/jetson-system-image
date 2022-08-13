@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 WORK_DIR="$(pwd)/build"
 L4T_DIR="${WORK_DIR}/l4t"
 KERNEL_DIR="${L4T_DIR}/kernel"
