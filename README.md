@@ -10,6 +10,7 @@ How to:
 5. Run one of the following commands to create `.img` file(s)
    - `sudo ./03_make_img.sh`: Single `.img` file
    - `sudo ./03_make_img_f2fs.sh`: Single `.img` file with root on F2FS filesystem
+   - `sudo ./03_make_img_f2fs_separate.sh`: Two `.img` files for BOOT (APP) and ROOT (multi device boot)
 
 ## Dependencies
 
