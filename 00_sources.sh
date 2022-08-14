@@ -20,7 +20,8 @@ mv "${WORK_DIR}/Linux_for_Tegra" "${L4T_DIR}"
 tar -C "${L4T_DIR}/source/public" -xjf "${L4T_DIR}/source/public/kernel_src.tbz2"
 
 # Toolchain
-GCC_LINARO_URL=http://releases.linaro.org/components/toolchain/binaries/7.5-2019.12/aarch64-linux-gnu/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu.tar.xz
+GCC_LINARO_URL=https://developer.nvidia.com/embedded/dlc/l4t-gcc-7-3-1-toolchain-64-bit
+#GCC_LINARO_URL=http://releases.linaro.org/components/toolchain/binaries/7.3-2018.05/aarch64-linux-gnu/gcc-linaro-7.3.1-2018.05-x86_64_aarch64-linux-gnu.tar.xz
 wget -O - "${GCC_LINARO_URL}" | tar -C "${WORK_DIR}" -xJf -
 
 chown -R "$(whoami):$(whoami)" "${WORK_DIR}"
